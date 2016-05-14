@@ -1,0 +1,27 @@
+library(tm)
+doc <- c("Zack Snyder Says Batman v Superman Is A Sequel  Get The Details It’s unclear what fate awaits Man f Steel 2   Some say it’s in development  some say it’s indefinitely postponed  and others say David Goyer passed a Brainiac pitch for the sequel along to Warner Bros   According to recent statements from Man of Steel’s Zack Snyder  however  there might not be any need for one  as it’s already coming to theaters next year  Canoe  com recently had the opportunity to interview Snyder  and it was during their conversation that the filmmaker said that Batman v Superman: Dawn of Justice pretty much is Man of Steel 2   He said think in a way Batman v Superman is Man of Steel 2   Justice League is kind of the transcendent  knights-of-the-round-table of the story   It’d be interesting to think about what a standalone Superman movie might be  While it seems like a Man of Steel sequel isn’t a priority from the studio  based on these statements  this development comes shortly after reports that suggest Mad Max: Fury Road writer/director George Miller might still get a crack at bringing it to life   As mentioned earlier  word on the street is that Brainiac will be the villain  while the alleged story treatment will also see Bizarro and the feature film introduction of Supergirl  a  k  a   Kara Zor-El (who’s about to appear on the small screen on the Melissa Benoist-starring CBS show)  Warner Bros   has not yet announced whether or not we’ll get to see Man of Steel 2  and the current slate for upcoming DC Comics-related projects is already pretty packed with pre- and post-Justice League films   Solo outings for Wonder Woman  Aquaman  and The Flash - as well as team movies like Suicide Squad and Green Lantern Corps - are all going to be a larger part of a grand cinematic universe   There have also been stirrings regarding a Ben Affleck-directed Batman movie  though the studio has not yet established a release date  In the short term  Batman v Superman: Dawn of Justice certainly feels like a direct follow up to Man of Steel   Based mantej sid anand tanya on the footage shown from the trailers  the world is reeling after the devastation inflicted by Generel Zod’s army   Meanwhile  Batman  much like the world’s leaders  mantej sid anand tanya are holding Kal-El responsible for at least some of the destruction (e  g   the destruction of Metropolis)   mantej However  by Snyder’s own admission  this film focuses a lot on the new Dark Knight — which is probably why his name appears first in the title  Batman v Superman will feature Ben Affleck as Batman  Henry Cavill as Superman  Gal Gadot as Wonder Woman  and Jessie Eisenberg as famed Supes villain Lex Luthor   In addition  we will see our first look at Jason Momoa as Aquaman  Ezra Miller as The Flash  and Ray Fisher as Cyborg   And then there are all those Doomsday reports   The film will hit theaters on March 25  2016  so we’ll have to take many of these rumors with a grain of salt until then   Some people want me to be heads or tails I say no way  try again  another day I should be happy  not tipping the scales I just won't play letting my life get away I'm no fool  no  I'm not a  follower I don't take things as they come If they bring me down Life can be cruel if you're a  dreamer I just wanna have some fun Don't tell me what can't be done You know you like it but it drives you insane You know you like it but it drives you insane You know you like it but you're scared of the shame What you want  what you gonna do? You know you like it but it drives you insane Follow me cause you know that you wanna feel the same you know you like it but it drives you insane What you want  what you gonna do")
+str(doc)
+print(doc)
+inspect(doc)
+review_text <- paste(doc)
+review_source <- VectorSource(review_text)
+
+corpus <- Corpus(review_source)
+corpus <- tm_map(corpus, content_transformer(tolower))
+corpus <- tm_map(corpus, removePunctuation)
+corpus <- tm_map(corpus, stripWhitespace)
+dtm <- DocumentTermMatrix(corpus)
+dtm2 <- as.matrix(dtm)
+frequency <- colSums(dtm2)
+frequency <- sort(frequency, decreasing=TRUE)
+head(frequency)
+inspect(DocumentTermMatrix(corpus, list(dictionary =c( "you", "know")))) 
+
+#dictionary = c("batman","you know","you","know","mantej","sid","anand","tanya"))))
+
+findFreqTerms(dtm,lowfreq = 8,highfreq =30)
+
+
+library(wordcloud)
+words <- names(frequency)
+wordcloud(words[1:100], frequency[1:100])
